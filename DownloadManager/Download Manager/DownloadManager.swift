@@ -46,7 +46,10 @@ class DownloadManager {
                     // response header fields
                     if let httpResponse = response as? HTTPURLResponse {
                         if let contentType = httpResponse.allHeaderFields["Content-Type"] as? String {
-                            print("🌎 ***** Response header content-type: \(contentType)")
+                            print("🌎 ***** Response header 👉 Content-Type: \(contentType)")
+                        }
+                        if let contentDisposition = httpResponse.allHeaderFields["Content-Disposition"] as? String {
+                            print("🌎 ***** Response header 👉 Content-Disposition: \(contentDisposition)")
                         }
                     }
                     
