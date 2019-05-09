@@ -16,8 +16,8 @@ class DownloadManager {
         // Create destination URL
         // ----------------------
         let documentsUrl : URL =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        
-        let destinationFileUrl = documentsUrl.appendingPathComponent("\(id).file")
+        let fileName = "\(id).file"
+        let destinationFileUrl = documentsUrl.appendingPathComponent(fileName)
         
         // download Url
         let server = WebService.getEndpoint("server")
@@ -43,6 +43,16 @@ class DownloadManager {
                     print("🌎 ***** Successfully downloaded. Status code: \(statusCode)")
                     print("🌎 ***** Successfully downloaded 👉 URL: \(fileURL!)")
                     do {
+                        
+                        let files = PersistenceManager.standard.getFilesNames()
+                        for file in files {
+                            if file == fileName {
+                                // remove existing file before copying a new one
+                                try! FileManager.default.removeItem(at: documentsUrl.appendingPathComponent(file))
+                                print("👉 delete file: \(file)")
+                            }
+                        }
+                        
 //                        // remove existing file before copying a new one
 //                        try! FileManager.default.removeItem(at: destinationFileUrl)
                         
