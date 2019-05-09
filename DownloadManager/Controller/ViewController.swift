@@ -27,7 +27,7 @@ class ViewController: UIViewController {
         self.downloadManager.downloadFile(id: "jpeg") { (success, message) in
             if success {
                 // download OK
-                print("OK")
+                print("👍 OK. Downloaded to path/file: \(message)")
                 self.view.hideActivityLoading()
                 self.view.alert(msg: "Download OK 👍", sender: self)
             }else{

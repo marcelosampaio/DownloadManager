@@ -43,14 +43,14 @@ class DownloadManager {
                     print("🌎 ***** Successfully downloaded. Status code: \(statusCode)")
                     print("🌎 ***** Successfully downloaded 👉 URL: \(fileURL!)")
                     do {
-                        // remove existing file before copying a new one
-                        try! FileManager.default.removeItem(at: destinationFileUrl)
+//                        // remove existing file before copying a new one
+//                        try! FileManager.default.removeItem(at: destinationFileUrl)
                         
                         // save file on disk
                         try FileManager.default.copyItem(at: tempLocalUrl, to: destinationFileUrl)
                         print("👍 ***** File manager copied item OK to \(destinationFileUrl)")
                         
-                        completion(true, "Successfully downloaded. Status code: \(statusCode)")
+                        completion(true, destinationFileUrl.absoluteString)
                     } catch (let writeError) {
                         print("❌ Error creating a file \(destinationFileUrl) : \(writeError)")
                         completion(true, "Error creating a file \(destinationFileUrl) : \(writeError)")
