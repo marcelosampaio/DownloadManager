@@ -2,11 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>authorization</key>
-	<string>Basic d2VyQ2xpZW50OnNlY3JldA==</string>
 	<key>server</key>
-	<string>https://images.unsplash.com</string>
-	<key>downloadReport</key>
-	<string>/[ID]</string>
+	<string>https://images.unsplash.com/photo-1417325384643-aac51acc9e5d</string>
 </dict>
 </plist>

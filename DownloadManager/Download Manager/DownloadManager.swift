@@ -11,35 +11,20 @@ import Foundation
 class DownloadManager {
     
     func downloadFile(id: String, completion: @escaping (Bool , String) -> ()) {
-        
-        //        id = "4a066e5a-a427-44c7-83c7-31e6634e362d"
-        
+
+        // ----------------------
         // Create destination URL
+        // ----------------------
         let documentsUrl : URL =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         
-        let destinationFileUrl = documentsUrl.appendingPathComponent("\(id).pdf")
+        let destinationFileUrl = documentsUrl.appendingPathComponent("\(id).file")
         
-        
-        let persistenceManager = PersistenceManager()
-        let documentsFolder = persistenceManager.getDocumentsFolder()
-        let filename = documentsFolder + "/" + id + ".pdf"
-        print("📙 filename: \(filename)")
-        
-        ///////
+        // download Url
         let server = WebService.getEndpoint("server")
-        let downloadReportUrl = WebService.getEndpoint("downloadReport").replacingOccurrences(of: "[ID]", with: id)
-        //        var reportUrl = downloadReportUrl.replacingOccurrences(of: "[ID]", with: id)
         
-        
-        let urlString = server + downloadReportUrl
+        let urlString = server
         let url = URL(string: urlString)
-        ///////
-        
-        
-        
-        
-        //        let downloadUrl = "https://homol-laudos.metareports.com.br/laudos/rest/exame/laudo/pdf/" + id
-        
+
         //Create URL to the source file you want to download
         let fileURL = url
         
@@ -55,17 +40,19 @@ class DownloadManager {
             if let tempLocalUrl = tempLocalUrl, error == nil {
                 // Success
                 if let statusCode = (response as? HTTPURLResponse)?.statusCode {
-                    print("***** Successfully downloaded. Status code: \(statusCode)")
-                    print("***** Successfully downloaded 👉 URL: \(fileURL!)")
+                    print("🌎 ***** Successfully downloaded. Status code: \(statusCode)")
+                    print("🌎 ***** Successfully downloaded 👉 URL: \(fileURL!)")
                     do {
-                        //                        // remove existing file before copying a new one
-                        //                        try FileManager.default.removeItem(at: destinationFileUrl)
+                        // remove existing file before copying a new one
+                        try! FileManager.default.removeItem(at: destinationFileUrl)
+                        
                         // save file on disk
                         try FileManager.default.copyItem(at: tempLocalUrl, to: destinationFileUrl)
-                        print("***** File manager copied item OK to \(destinationFileUrl)")
+                        print("👍 ***** File manager copied item OK to \(destinationFileUrl)")
+                        
                         completion(true, "Successfully downloaded. Status code: \(statusCode)")
                     } catch (let writeError) {
-                        print("Error creating a file \(destinationFileUrl) : \(writeError)")
+                        print("❌ Error creating a file \(destinationFileUrl) : \(writeError)")
                         completion(true, "Error creating a file \(destinationFileUrl) : \(writeError)")
                     }
                 }
