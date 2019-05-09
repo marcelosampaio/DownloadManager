@@ -42,6 +42,14 @@ class DownloadManager {
                 if let statusCode = (response as? HTTPURLResponse)?.statusCode {
                     print("🌎 ***** Successfully downloaded. Status code: \(statusCode)")
                     print("🌎 ***** Successfully downloaded 👉 URL: \(fileURL!)")
+                    
+                    // response header fields
+                    if let httpResponse = response as? HTTPURLResponse {
+                        if let contentType = httpResponse.allHeaderFields["Content-Type"] as? String {
+                            print("🌎 ***** Response header content-type: \(contentType)")
+                        }
+                    }
+                    
                     do {
                         
                         let files = PersistenceManager.standard.getFilesNames()
@@ -52,9 +60,6 @@ class DownloadManager {
                                 print("👉 delete file: \(file)")
                             }
                         }
-                        
-//                        // remove existing file before copying a new one
-//                        try! FileManager.default.removeItem(at: destinationFileUrl)
                         
                         // save file on disk
                         try FileManager.default.copyItem(at: tempLocalUrl, to: destinationFileUrl)
